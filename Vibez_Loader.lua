@@ -27,7 +27,7 @@
 
 local CONFIG = {
     Version = '1.0.0',
-    BaseUrl = 'https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/',
+    BaseUrl = 'https://raw.githubusercontent.com/VibezHub/Vibez/main/',
     LibPath = 'Vibez_Lib.lua',
     DevFolder = 'vibez/dev/',
 }
