@@ -4303,7 +4303,8 @@ if not isPractice then
 		end
 
 		while playback < #data.ball do
-			if replicatedStorage.Flags.StatusTag.Value ~= 'REPLAY' then
+			local statusTag = replicatedStorage:FindFirstChild('Flags') and replicatedStorage.Flags:FindFirstChild('StatusTag')
+			if not statusTag or statusTag.Value ~= 'REPLAY' then
 				break
 			end
 
@@ -4489,8 +4490,9 @@ if not isPractice then
 
 		remote:FireServer('ReplayFinished')
 
-		if replicatedStorage.Flags.StatusTag.Value == 'REPLAY' then
-			replicatedStorage.Flags.StatusTag.Value = ''
+		local endTag = replicatedStorage:FindFirstChild('Flags') and replicatedStorage.Flags:FindFirstChild('StatusTag')
+		if endTag and endTag.Value == 'REPLAY' then
+			endTag.Value = ''
 		end
 
 		task.wait(0.2)
