@@ -21,8 +21,6 @@ end
 print("[Panda] Authenticated. Premium:", result.isPremium)
 
 -- Your protected code goes below this line.
-
-
 --[[
     Vibez Loader
     ------------------------------------------------------------
