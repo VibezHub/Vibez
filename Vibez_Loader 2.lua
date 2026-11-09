@@ -30,6 +30,7 @@ local CONFIG = {
     BaseUrl = 'https://raw.githubusercontent.com/VibezHub/Vibez/main/',
     LibPath = 'Vibez_Lib.lua',
     DevFolder = 'vibez/dev/',
+    AutoDetect = false,   -- false = always show the game picker, true = auto-load the detected game
 }
 
 local Games = {
@@ -129,7 +130,7 @@ loadGame = function(g)
     return ok
 end
 
-showSelector = function(reason)
+showSelector = function(reason, detected)
     local Window = VibezLib:CreateWindow({
         Title = 'ez',
         Prefix = 'Vib',
@@ -139,7 +140,7 @@ showSelector = function(reason)
     for i = 1, #Games do
         local g = Games[i]
         Tab:CreateButton({
-            Name = 'Load ' .. g.Name,
+            Name = 'Load ' .. g.Name .. ((detected == g) and '  (this game)' or ''),
             Callback = function()
                 loadGame(g)
             end,
@@ -163,11 +164,13 @@ local ok, err = xpcall(function()
 
     local g = detect()
     print('[Vibez] PlaceId ' .. tostring(game.PlaceId) .. ' / GameId ' .. tostring(game.GameId))
-    if g then
+    if g and CONFIG.AutoDetect then
         print('[Vibez] Detected ' .. g.Name .. ', loading module...')
         loadGame(g)
+    elseif g then
+        showSelector('Pick a game to load. ' .. g.Name .. ' was detected.', g)
     else
-        showSelector('This game is not supported yet. Pick one manually.')
+        showSelector('This game is not supported yet. Pick one manually.', nil)
     end
 end, function(e)
     return tostring(e) .. '\n' .. debug.traceback()
